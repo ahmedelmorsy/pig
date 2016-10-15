@@ -22,17 +22,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.mapred.JobConf;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hdfs.DistributedFileSystem;
+import org.apache.hadoop.hdfs.MiniDFSCluster;
 import org.apache.hadoop.mapreduce.filecache.DistributedCache;
 import org.apache.hadoop.mapreduce.v2.MiniMRYarnCluster;
-import org.apache.hadoop.mapreduce.v2.TestMRJobs;
-import org.apache.hadoop.yarn.server.MiniYARNCluster;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hdfs.MiniDFSCluster;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.pig.backend.hadoop.datastorage.ConfigurationUtil;
 
 /**
  * This class builds a single instance of itself with the Singleton 
@@ -65,8 +59,8 @@ public class MiniCluster extends MiniGenericCluster {
   
             // Builds and starts the mini dfs and mapreduce clusters
             Configuration config = new Configuration();
-            m_dfs = new MiniDFSCluster(config, dataNodes, true, null);
-            m_fileSys = m_dfs.getFileSystem();
+            MiniDFSCluster m_dfs = new MiniDFSCluster(config, dataNodes, true, null);
+            DistributedFileSystem m_fileSys = m_dfs.getFileSystem();
             m_dfs_conf = m_dfs.getConfiguration(0);
 
             //Create user home directory
@@ -81,7 +75,7 @@ public class MiniCluster extends MiniGenericCluster {
 			//m_mr_conf = m_mr.getConfig();
             m_mr_conf = new Configuration(m_mr.getConfig());
             
-            m_conf = m_mr_conf;
+            Configuration m_conf = m_mr_conf;
 			m_conf.set("fs.default.name", m_dfs_conf.get("fs.default.name"));
             m_conf.unset("mapreduce.job.cache.files");
 

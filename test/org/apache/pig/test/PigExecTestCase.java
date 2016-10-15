@@ -33,6 +33,10 @@ import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)   
 public abstract class PigExecTestCase extends TestCase {
+	
+	public PigExecTestCase() {
+		super("PigExecTestCase");
+	}
 
     protected final Log log = LogFactory.getLog(getClass());
     

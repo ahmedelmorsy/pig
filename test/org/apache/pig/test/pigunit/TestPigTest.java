@@ -15,17 +15,18 @@ package org.apache.pig.test.pigunit;
 import java.io.File;
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.fs.Path;
 import org.apache.pig.pigunit.Cluster;
 import org.apache.pig.pigunit.PigTest;
 import org.apache.pig.pigunit.pig.PigServer;
 import org.apache.pig.tools.parameters.ParseException;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import junit.framework.TestCase;
 
 /**
  * <p>Various examples about how to use PigUnit.
@@ -278,7 +279,7 @@ public class TestPigTest {
 
     test.runScript();
 
-    TestCase.assertTrue(cluster.delete(new Path("top_3_queries")));
+    Assert.assertTrue(cluster.delete(new Path("top_3_queries")));
   }
 
   @Ignore("Not ready yet")
